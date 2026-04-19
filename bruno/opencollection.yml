@@ -2,6 +2,62 @@ opencollection: 1.0.0
 
 info:
   name: Bili
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
+
+docs:
+  content: |-
+    This is document.
+
+    ## First Run (Install Dependencies)
+
+    本 collection 的脚本使用了外部 npm 包（如 `node-forge`）。
+    第一次使用前，请先在 `bruno` 目录安装依赖：
+
+    ```powershell
+    cd bruno
+    npm install
+    ```
+
+    同时请确保 Bruno 已开启 Developer Mode（允许 `require` 外部包）。
+
+    ## Auth
+
+    Bilibili API 使用 appkey + appsec 签名机制进行身份校验。
+
+    ### 签名算法
+
+    1. 将所有请求参数按 key 字母排序，拼接为 query string
+    2. 末尾拼接 appsec：`md5(sorted_query_string + appsec)`
+    3. 计算结果即为 `sign` 参数的值
+
+    ### AppKey / AppSec 配对
+
+    | 变量 | 值 | 用途 |
+    |------|-----|------|
+    | appKey / appSec | `1d8b6e7d45233436` / `560c52ccd288fed045859ed18bffd973` | 已登录用户接口 |
+    | appKeyGuest / appSecGuest | `783bbb7264451d82` / `2653583c8873dea268ab9386918b1d65` | 游客/登录前接口 |
+
+    > 注意：appkey 和 appsec 必须配对使用，不可混用，否则会返回 `{"code":-3,"message":"API校验密匙错误"}`。
+
+    ### 脚本自动签名
+
+    各 folder 的 before-request 脚本会自动：
+    - 检测请求中是否包含 `sign` 参数（body 或 query params）
+    - 根据请求中的 `appkey` 自动匹配对应的 `appsec`
+    - 更新 `ts` 为当前时间戳
+    - 计算并设置 `sign`
+    - 通过 `bru.setVar` 写入运行时变量，供 `{{ts}}` 和 `{{sign}}` 占位符自动替换
+  type: text/markdown
 bundled: false
 extensions:
   bruno:

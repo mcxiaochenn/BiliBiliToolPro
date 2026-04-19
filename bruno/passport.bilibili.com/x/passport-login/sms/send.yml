@@ -1,0 +1,101 @@
+info:
+  name: send
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: https://passport.bilibili.com/x/passport-login/sms/send
+  headers:
+    - name: app-key
+      value: android64
+    - name: bili-http-engine
+      value: ignet
+    - name: buvid
+      value: XUA5651A9EDF7387153A945CDE96CADCB6000
+    - name: env
+      value: prod
+    - name: fp_local
+      value: 910f57d9d7feaf6928e592860452d06b202505211207597aa9050a2e5c31f431
+    - name: fp_remote
+      value: 910f57d9d7feaf6928e592860452d06b202505211207597aa9050a2e5c31f431
+    - name: guestid
+      value: "24675260415603"
+    - name: session_id
+      value: 45dd1740
+    - name: user-agent
+      value: Mozilla/5.0 BiliDroid/8.45.1 (bbcallen@gmail.com) os/android model/SM-S9210 mobi_app/android build/8451100 channel/bili innerVer/8451110 osVer/12 network/2
+    - name: x-bili-locale-bin
+      value: CggKAnpoGgJDThIICgJ6aBoCQ04iDUFzaWEvU2hhbmdoYWkqBiswODowMA
+    - name: x-bili-metadata-ip-region
+      value: CN
+    - name: x-bili-net-bin
+      value: DcdEej8gAQ
+    - name: x-bili-ticket
+      value: eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzY1OTg5NTIsImlhdCI6MTc3NjU2OTg1MiwiYnV2aWQiOiJYVUE1NjUxQTlFREY3Mzg3MTUzQTk0NUNERTk2Q0FEQ0I2MDAwIn0.Wv7_xMsAO1dXbiU1657Jc00Aps6GdGMRy_cHwuMI8cs
+    - name: x-bili-trace-id
+      value: 36dbff19f2d0ffffc7b3483aa569e456:c7b3483aa569e456:0:0
+  body:
+    type: form-urlencoded
+    data:
+      - name: appkey
+        value: "{{appKeyGuest}}"
+      - name: build
+        value: "{{build}}"
+      - name: buvid
+        value: "{{buvid}}"
+      - name: c_locale
+        value: zh_CN
+      - name: channel
+        value: bili
+      - name: cid
+        value: "86"
+      - name: device_tourist_id
+        value: "24675260415603"
+      - name: disable_rcmd
+        value: "0"
+      - name: extend
+        value: ""
+      - name: local_id
+        value: "{{buvid}}"
+      - name: login_session_id
+        value: fddb6c114c723b3612822a75f04eeeb3
+      - name: mobi_app
+        value: android
+      - name: platform
+        value: android
+      - name: s_locale
+        value: zh_CN
+      - name: spm_id
+        value: main.homepage.bottombar.myinfo
+      - name: statistics
+        value: "{{statistics}}"
+      - name: tel
+        value: "{{phone}}"
+      - name: ts
+        value: "{{ts}}"
+      - name: sign
+        value: "{{sign}}"
+  auth: inherit
+
+settings:
+  encodeUrl: false
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: |-
+  ## Response Sample
+
+  ```json
+  {
+    "code": 0,
+    "message": "OK",
+    "ttl": 1,
+    "data": {
+      "is_new": false,
+      "captcha_key": "",
+      "recaptcha_url": "https://www.bilibili.com/h5/project-msg-auth/verify?ct=geetest&recaptcha_token=e895c2cae40f4476a90034a2c75fe795&gee_gt=1c0ea7c7d47d8126dda19ee3431a5f38&gee_challenge=a88fc95608e371e769f0670cdf0ff809&hash=4c3dc6210c927bbc0ba18088ae09def7"
+    }
+  }
+  ```

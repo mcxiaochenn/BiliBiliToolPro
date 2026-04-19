@@ -7,12 +7,9 @@ http:
   method: GET
   url: https://api.bilibili.com/x/vip/vip_center/sign_in/three_days_sign?access_key={{access_key}}&appkey={{appKey}}&build=8451100&csrf={{csrf}}&device=phone&disable_rcmd=0&mobi_app=android&platform=android&statistics={"appId":1,"platform":3,"version":"8.45.1","abtest":""}&t=1748747431084&ts=1748747431&web_location=666.146&sign=e95c76f976aed346f84cdc7098f8c35e
   headers:
-    - name: Host
-      value: api.bilibili.com
     - name: Cookie
       value: "{{cookieStr}}"
-    - name: accept
-      value: application/json, text/plain, */*
+      disabled: true
     - name: bili-http-engine
       value: ignet
     - name: buvid

@@ -7,8 +7,6 @@ http:
   method: POST
   url: https://passport.bilibili.com/x/passport-login/oauth2/login
   headers:
-    - name: Host
-      value: passport.bilibili.com
     - name: buvid
       value: "{{buvid}}"
     - name: env
@@ -31,17 +29,15 @@ http:
       value: eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzU3MzI4OTIsImlhdCI6MTczNTcwMzc5MiwiYnV2aWQiOiJYVzcyNEQxNzI0Njg3MTlDQzI1NjA1REIyNDI0NzhEMkUxMjE5In0.hEDtIHZoN5Wyoja2hNuPcfy-laa1r05ObiEhJ5gPSt4
     - name: bili-http-engine
       value: cronet
-    - name: content-type
-      value: application/x-www-form-urlencoded; charset=utf-8
   body:
     type: form-urlencoded
     data:
       - name: appkey
-        value: 783bbb7264451d82
+        value: "{{appKeyGuest}}"
       - name: bili_local_id
         value: "{{device_id}}"
       - name: build
-        value: "7720200"
+        value: "{{build}}"
       - name: buvid
         value: "{{buvid}}"
       - name: c_locale
@@ -75,22 +71,76 @@ http:
       - name: mobi_app
         value: android
       - name: password
-        value: "{{pwd}}"
+        value: "{{encryptedPwd}}"
       - name: platform
         value: android
       - name: s_locale
         value: zh_CN
       - name: statistics
-        value: "%7B%22appId%22%3A1%2C%22platform%22%3A3%2C%22version%22%3A%227.72.0%22%2C%22abtest%22%3A%22%22%7D"
+        value: "{{statistics}}"
       - name: ts
-        value: "1735704456"
+        value: "{{ts}}"
       - name: username
         value: "{{phone}}"
       - name: sign
-        value: 8e9d9f9da8d5a9355ef8ba620de75175
+        value: "{{sign}}"
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // 1. RSA encrypt password
+        const forge = require('node-forge');
+        const { signRequest } = require('./lib/sign');
+
+        const rsaHash = bru.getVar("rsa_hash");
+        const rsaKeyPem = bru.getVar("rsa_key");
+
+        if (!rsaHash || !rsaKeyPem) {
+          console.log("❌ rsa_hash or rsa_key not found. Please run web/key first!");
+        } else {
+          const plainPwd = bru.getEnvVar("pwd");
+          if (!plainPwd) {
+            console.log("❌ env variable 'pwd' is not set!");
+          } else {
+            const publicKey = forge.pki.publicKeyFromPem(rsaKeyPem);
+            const encrypted = publicKey.encrypt(rsaHash + plainPwd, 'RSAES-PKCS1-V1_5');
+            const encryptedBase64 = forge.util.encode64(encrypted);
+            bru.setVar("encryptedPwd", encryptedBase64);
+            console.log("✅ Password RSA encrypted, length:", encryptedBase64.length);
+
+            // 2. Recalculate sign (folder script skipped because {{encryptedPwd}} was unresolved)
+            signRequest(req, bru);
+          }
+        }
+    - type: after-response
+      code: |-
+        //test
+        //todo
 
 settings:
   encodeUrl: true
   timeout: 0
   followRedirects: true
   maxRedirects: 5
+
+docs: |
+  ## Response Sample
+
+  ```json
+  {
+    "code": 0,
+    "message": "OK",
+    "ttl": 1,
+    "data": {
+      "status": 2,
+      "message": "本次登录环境存在风险, 需使用手机号进行验证或绑定",
+      "url": "https://passport.bilibili.com/h5-app/passport/risk/verify?tmp_token=0232445496b21acb3bca82b09e82e141&request_id=2720bc964b0d453eb5f1b4fb7ab75b66&source=risk",
+      "token_info": null,
+      "cookie_info": null,
+      "sso": null,
+      "is_new": false,
+      "is_tourist": false
+    }
+  }
+  ```

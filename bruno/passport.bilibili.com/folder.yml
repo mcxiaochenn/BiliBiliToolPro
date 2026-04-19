@@ -1,6 +1,12 @@
 info:
   name: passport.bilibili.com
   type: folder
-  seq: 5
+  seq: 1
 
-request: {}
+request:
+  scripts:
+    - type: before-request
+      code: |-
+        // Shared sign utility — see lib/sign.js
+        const { signRequest } = require('./lib/sign');
+        signRequest(req, bru);
