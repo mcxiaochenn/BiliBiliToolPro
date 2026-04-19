@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "Bili",
+  "name": "BiliLegacy",
   "type": "collection",
   "ignore": [
     "node_modules",
