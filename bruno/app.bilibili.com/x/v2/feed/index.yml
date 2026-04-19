@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: https://passport.bilibili.com/x/v2/feed/index
+  url: "{{host}}/x/v2/feed/index"
   headers:
     - name: Host
       value: app.bilibili.com

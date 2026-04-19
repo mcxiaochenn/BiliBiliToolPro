@@ -2,3 +2,8 @@ info:
   name: api.bilibili.com
   type: folder
   seq: 2
+
+request:
+  variables:
+    - name: host
+      value: https://api.bilibili.com

@@ -1,16 +1,22 @@
 info:
-  name: myinfo
+  name: simple
   type: http
   seq: 1
 
 http:
   method: GET
-  url: https://passport.bilibili.com/x/v2/account/myinfo?access_key={{access_key}}&appkey=783bbb7264451d82&build=7720200&buvid={{buvid}}&c_locale=zh_CN&channel=yingyongbao&disable_rcmd=0&local_id={{buvid}}&mobi_app=android&platform=android&s_locale=zh_CN&statistics={"appId":1,"platform":3,"version":"7.72.0","abtest":""}&ts=1735704457&sign=b33e7a0aa1aef3d1d4284c759fa12857
+  url: '{{host}}/x/relation/followings/simple?_device=android&_hwid=e0N3QnRBJEV0QiEXaxdrXG8LPgw1UDECYFU0AWJTZQ&access_key={{access_key}}&appkey={{appKey}}&build=7720200&c_locale=zh_CN&channel=yingyongbao&disable_rcmd=0&mobi_app=android&platform=android&s_locale=zh_CN&src=yingyongbao&statistics={"appId":1,"platform":3,"version":"7.72.0","abtest":""}&trace_id=20250101120700037&ts={{ts}}&version=7.72.0.7720200&sign={{sign}}'
   headers:
     - name: Host
-      value: app.bilibili.com
+      value: api.bilibili.com
     - name: buvid
       value: "{{buvid}}"
+    - name: fp_local
+      value: "{{device_id}}"
+    - name: fp_remote
+      value: "{{device_id}}"
+    - name: session_id
+      value: "3160e892"
     - name: env
       value: prod
     - name: app-key
@@ -18,7 +24,7 @@ http:
     - name: user-agent
       value: Mozilla/5.0 BiliDroid/7.72.0 (bbcallen@gmail.com) os/android model/Nexus mobi_app/android build/7720200 channel/yingyongbao innerVer/7720210 osVer/10 network/2
     - name: x-bili-trace-id
-      value: 46e70b4538aaf4001079cf97f86774bf:1079cf97f86774bf:0:0
+      value: 97831b4bddcb6011ee84ae59806774bf:ee84ae59806774bf:0:0
     - name: x-bili-aurora-eid
       value: UlAAQFkMBVkH
     - name: x-bili-mid
@@ -32,17 +38,20 @@ http:
     - name: bili-http-engine
       value: cronet
   params:
+    - name: _device
+      value: android
+      type: query
+    - name: _hwid
+      value: e0N3QnRBJEV0QiEXaxdrXG8LPgw1UDECYFU0AWJTZQ
+      type: query
     - name: access_key
       value: "{{access_key}}"
       type: query
     - name: appkey
-      value: 783bbb7264451d82
+      value: "{{appKey}}"
       type: query
     - name: build
       value: "7720200"
-      type: query
-    - name: buvid
-      value: "{{buvid}}"
       type: query
     - name: c_locale
       value: zh_CN
@@ -53,9 +62,6 @@ http:
     - name: disable_rcmd
       value: "0"
       type: query
-    - name: local_id
-      value: "{{buvid}}"
-      type: query
     - name: mobi_app
       value: android
       type: query
@@ -65,14 +71,23 @@ http:
     - name: s_locale
       value: zh_CN
       type: query
+    - name: src
+      value: yingyongbao
+      type: query
     - name: statistics
       value: '{"appId":1,"platform":3,"version":"7.72.0","abtest":""}'
       type: query
+    - name: trace_id
+      value: "20250101120700037"
+      type: query
     - name: ts
-      value: "1735704457"
+      value: "{{ts}}"
+      type: query
+    - name: version
+      value: 7.72.0.7720200
       type: query
     - name: sign
-      value: b33e7a0aa1aef3d1d4284c759fa12857
+      value: "{{sign}}"
       type: query
 
 settings:

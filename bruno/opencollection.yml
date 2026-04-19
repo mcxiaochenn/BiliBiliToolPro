@@ -30,6 +30,14 @@ docs:
 
     同时请确保 Bruno 已开启 Developer Mode（允许 `require` 外部包）。
 
+    ## Host
+
+    Host以Header里的Host(:authority)为准。
+
+    抓包经常会出现Url里Host是`https://passport.bilibili.com`，但Header里Host是`api.bilibili.com`的情况，此时该接口Url的Host完全可以换成后者，但反过来则不行。
+
+    该情况，只会将API维护到后者Host内。
+
     ## Auth
 
     Bilibili API 使用 appkey + appsec 签名机制进行身份校验。
