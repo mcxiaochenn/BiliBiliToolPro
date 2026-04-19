@@ -5,10 +5,8 @@ info:
 
 http:
   method: GET
-  url: '{{host}}/x/v2/account/myinfo?access_key={{access_key}}&appkey=783bbb7264451d82&build=7720200&buvid={{buvid}}&c_locale=zh_CN&channel=yingyongbao&disable_rcmd=0&local_id={{buvid}}&mobi_app=android&platform=android&s_locale=zh_CN&statistics={"appId":1,"platform":3,"version":"7.72.0","abtest":""}&ts={{ts}}&sign={{sign}}'
+  url: "{{host}}/x/v2/account/myinfo?access_key={{access_key}}&appkey=783bbb7264451d82&build=7720200&buvid={{buvid}}&c_locale=zh_CN&channel=yingyongbao&disable_rcmd=0&local_id={{buvid}}&mobi_app=android&platform=android&s_locale=zh_CN&statistics={{statistics}}&ts={{ts}}&sign={{sign}}"
   headers:
-    - name: Host
-      value: app.bilibili.com
     - name: buvid
       value: "{{buvid}}"
     - name: env
@@ -16,7 +14,7 @@ http:
     - name: app-key
       value: android64
     - name: user-agent
-      value: Mozilla/5.0 BiliDroid/7.72.0 (bbcallen@gmail.com) os/android model/Nexus mobi_app/android build/7720200 channel/yingyongbao innerVer/7720210 osVer/10 network/2
+      value: "{{user-agent}}"
     - name: x-bili-trace-id
       value: 46e70b4538aaf4001079cf97f86774bf:1079cf97f86774bf:0:0
     - name: x-bili-aurora-eid
@@ -66,7 +64,7 @@ http:
       value: zh_CN
       type: query
     - name: statistics
-      value: '{"appId":1,"platform":3,"version":"7.72.0","abtest":""}'
+      value: "{{statistics}}"
       type: query
     - name: ts
       value: "{{ts}}"

@@ -5,10 +5,8 @@ info:
 
 http:
   method: GET
-  url: '{{host}}/x/relation/tag/special?_device=android&_hwid=e0N3QnRBJEV0QiEXaxdrXG8LPgw1UDECYFU0AWJTZQ&access_key={{access_key}}&appkey={{appKey}}&build=7720200&c_locale=zh_CN&channel=yingyongbao&disable_rcmd=0&mobi_app=android&platform=android&s_locale=zh_CN&src=yingyongbao&statistics={"appId":1,"platform":3,"version":"7.72.0","abtest":""}&trace_id=20250101120700047&ts={{ts}}&version=7.72.0.7720200&sign={{sign}}'
+  url: "{{host}}/x/relation/tag/special?_device=android&_hwid=e0N3QnRBJEV0QiEXaxdrXG8LPgw1UDECYFU0AWJTZQ&access_key={{access_key}}&appkey={{appKey}}&build={{build}}&c_locale=zh_CN&channel=yingyongbao&disable_rcmd=0&mobi_app=android&platform=android&s_locale=zh_CN&src=yingyongbao&statistics={{statistics}}&trace_id=20250101120700047&ts={{ts}}&version=7.72.0.7720200&sign={{sign}}"
   headers:
-    - name: Host
-      value: api.bilibili.com
     - name: buvid
       value: "{{buvid}}"
     - name: fp_local
@@ -51,7 +49,7 @@ http:
       value: "{{appKey}}"
       type: query
     - name: build
-      value: "7720200"
+      value: "{{build}}"
       type: query
     - name: c_locale
       value: zh_CN
@@ -75,7 +73,7 @@ http:
       value: yingyongbao
       type: query
     - name: statistics
-      value: '{"appId":1,"platform":3,"version":"7.72.0","abtest":""}'
+      value: "{{statistics}}"
       type: query
     - name: trace_id
       value: "20250101120700047"
@@ -95,3 +93,28 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
+
+docs: |
+  ## Response Sample
+
+  ```json
+  {
+    "code": 0,
+    "message": "0",
+    "ttl": 1,
+    "data": [
+      432969969,
+      385670211,
+      515078764,
+      39627524,
+      493570956,
+      1241806378,
+      942755,
+      199676483,
+      79061224,
+      7584632,
+      473673050,
+      169952592
+    ]
+  }
+  ```

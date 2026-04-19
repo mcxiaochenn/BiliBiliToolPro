@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: https://api.bilibili.com/x/vip/vip_center/sign_in/three_days_sign?access_key={{access_key}}&appkey={{appKey}}&build=8451100&csrf={{csrf}}&device=phone&disable_rcmd=0&mobi_app=android&platform=android&statistics={"appId":1,"platform":3,"version":"8.45.1","abtest":""}&t=1748747431084&ts=1748747431&web_location=666.146&sign=e95c76f976aed346f84cdc7098f8c35e
+  url: "{{host}}/x/vip/vip_center/sign_in/three_days_sign?access_key={{access_key}}&appkey={{appKey}}&build={{build}}&csrf={{csrf}}&device=phone&disable_rcmd=0&mobi_app=android&platform=android&statistics={{statistics}}&ts={{ts}}&web_location=666.146&sign={{sign}}"
   headers:
     - name: Cookie
       value: "{{cookieStr}}"
@@ -40,7 +40,7 @@ http:
       value: "{{appKey}}"
       type: query
     - name: build
-      value: "8451100"
+      value: "{{build}}"
       type: query
     - name: csrf
       value: "{{csrf}}"
@@ -58,19 +58,20 @@ http:
       value: android
       type: query
     - name: statistics
-      value: '{"appId":1,"platform":3,"version":"8.45.1","abtest":""}'
+      value: "{{statistics}}"
       type: query
     - name: t
       value: "1748747431084"
       type: query
+      disabled: true
     - name: ts
-      value: "1748747431"
+      value: "{{ts}}"
       type: query
     - name: web_location
       value: "666.146"
       type: query
     - name: sign
-      value: e95c76f976aed346f84cdc7098f8c35e
+      value: "{{sign}}"
       type: query
   auth: inherit
 

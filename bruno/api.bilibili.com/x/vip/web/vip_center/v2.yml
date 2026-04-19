@@ -5,10 +5,8 @@ info:
 
 http:
   method: GET
-  url: https://api.bilibili.com/x/vip/web/vip_center/v2?access_key={{access_key}}&act_id=872&appkey={{appKey}}&build=8451100&csrf={{csrf}}&device=phone&disable_rcmd=0&is_selected=false&mobi_app=android&platform=android&select_modules=VipExclusive,BigPoint&statistics={"appId":1,"platform":3,"version":"8.45.1","abtest":""}&ts=1748751549&web_location=666.146&sign=6e336f0cc44606c32560ee09b6ae23fa
+  url: "{{host}}/x/vip/web/vip_center/v2?access_key={{access_key}}&act_id=872&appkey={{appKey}}&build={{build}}&csrf={{csrf}}&device=phone&disable_rcmd=0&is_selected=false&mobi_app=android&platform=android&select_modules=VipExclusive,BigPoint&statistics={{statistics}}&ts={{ts}}&web_location=666.146&sign={{sign}}"
   headers:
-    - name: Host
-      value: api.bilibili.com
     - name: Cookie
       value: "{{cookieStr}}"
     - name: accept
@@ -46,7 +44,7 @@ http:
       value: "{{appKey}}"
       type: query
     - name: build
-      value: "8451100"
+      value: "{{build}}"
       type: query
     - name: csrf
       value: "{{csrf}}"
@@ -70,16 +68,16 @@ http:
       value: VipExclusive,BigPoint
       type: query
     - name: statistics
-      value: '{"appId":1,"platform":3,"version":"8.45.1","abtest":""}'
+      value: "{{statistics}}"
       type: query
     - name: ts
-      value: "1748751549"
+      value: "{{ts}}"
       type: query
     - name: web_location
       value: "666.146"
       type: query
     - name: sign
-      value: 6e336f0cc44606c32560ee09b6ae23fa
+      value: "{{sign}}"
       type: query
   auth: inherit
 
