@@ -7,16 +7,12 @@ http:
   method: POST
   url: "{{host}}/x/vip/experience/add"
   headers:
-    - name: Host
-      value: api.bilibili.com
     - name: Cookie
       value: "{{cookieStr}}"
     - name: native_api_from
       value: h5
     - name: buvid
       value: "{{buvid}}"
-    - name: accept
-      value: application/json, text/plain, */*
     - name: referer
       value: https://big.bilibili.com/mobile/index?exp_symbol=release_version&oflAb=1
     - name: user-agent
@@ -53,11 +49,11 @@ http:
       - name: platform
         value: android
       - name: statistics
-        value: '{"appId":1,"platform":3,"version":"7.72.0","abtest":""}'
+        value: "{{statistics}}"
       - name: ts
-        value: "1735710395"
+        value: "{{ts}}"
       - name: sign
-        value: 694521e34b88ec0593a8cc3edbc4e117
+        value: "{{sign}}"
 
 settings:
   encodeUrl: true

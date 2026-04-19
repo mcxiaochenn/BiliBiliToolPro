@@ -35,6 +35,8 @@ http:
       value: eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzU3NzI2NDcsImlhdCI6MTczNTc0MzU0NywiYnV2aWQiOiJYVzcyNEQxNzI0Njg3MTlDQzI1NjA1REIyNDI0NzhEMkUxMjE5In0.eafhpooLoe2q6cA45_Xrgq1VO-y490pxP5gwJ4qm_ik
     - name: bili-http-engine
       value: cronet
+    - name: Cookie
+      value: "{{cookieStr}}"
   body:
     type: form-urlencoded
     data:

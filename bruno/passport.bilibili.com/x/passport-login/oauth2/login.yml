@@ -115,6 +115,8 @@ settings:
 docs: |
   ## Response Sample
 
+  ### Risk
+
   ```json
   {
     "code": 0,
@@ -130,5 +132,71 @@ docs: |
       "is_new": false,
       "is_tourist": false
     }
+  }
+  ```
+
+  ### Success
+
+  ```json
+  {
+  	"code": 0,
+  	"message": "OK",
+  	"ttl": 1,
+  	"data": {
+  		"status": 0,
+  		"message": "",
+  		"url": "",
+  		"token_info": {
+  			"mid": 123456,
+  			"access_token": "abc",
+  			"refresh_token": "abc",
+  			"fast_login_token": "abc",
+  			"expires_in": 15552000,
+  			"region": "CN",
+  			"store_region": "CN"
+  		},
+  		"cookie_info": {
+  			"cookies": [{
+  				"name": "SESSDATA",
+  				"value": "abc",
+  				"http_only": 1,
+  				"expires": 1784390459,
+  				"secure": 1,
+  				"same_site": 0
+  			}, {
+  				"name": "bili_jct",
+  				"value": "abc",
+  				"http_only": 0,
+  				"expires": 1784390459,
+  				"secure": 0,
+  				"same_site": 0
+  			}, {
+  				"name": "DedeUserID",
+  				"value": "123456",
+  				"http_only": 0,
+  				"expires": 1784390459,
+  				"secure": 0,
+  				"same_site": 0
+  			}, {
+  				"name": "DedeUserID__ckMd5",
+  				"value": "abc",
+  				"http_only": 0,
+  				"expires": 1784390459,
+  				"secure": 0,
+  				"same_site": 0
+  			}, {
+  				"name": "sid",
+  				"value": "abc",
+  				"http_only": 0,
+  				"expires": 1784390459,
+  				"secure": 0,
+  				"same_site": 0
+  			}],
+  			"domains": [".bilibili.com", ".biligame.com", ".bilibili.cn", ".huasheng.cn"]
+  		},
+  		"sso": ["https://passport.bilibili.com/api/v2/sso", "https://passport.biligame.com/api/v2/sso", "https://passport.bilibili.cn/api/v2/sso"],
+  		"is_new": false,
+  		"is_tourist": false
+  	}
   }
   ```

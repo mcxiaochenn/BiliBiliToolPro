@@ -9,7 +9,6 @@ http:
   headers:
     - name: Cookie
       value: "{{cookieStr}}"
-      disabled: true
     - name: bili-http-engine
       value: ignet
     - name: buvid
