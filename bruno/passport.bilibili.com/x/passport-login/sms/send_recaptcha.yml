@@ -45,21 +45,21 @@ http:
       - name: extend
         value: ""
       - name: gee_challenge
-        value: 40778741c078427ccbf6cdb24b107312k6
+        value: "{{risk_gee_challenge}}"
       - name: gee_seccode
-        value: 92c3f017c5eba688e36ccef824855870|jordan
+        value: 2df4cd1ccaefbd5511ebec809e13c09f|jordan
       - name: gee_validate
-        value: 92c3f017c5eba688e36ccef824855870
+        value: 2df4cd1ccaefbd5511ebec809e13c09f
       - name: local_id
         value: "{{buvid}}"
       - name: login_session_id
-        value: fddb6c114c723b3612822a75f04eeeb3
+        value: fddb6c114c723b3612822a75f04eeeb4
       - name: mobi_app
         value: android
       - name: platform
         value: android
       - name: recaptcha_token
-        value: 370c25979a3440e48ba1086e67ed9927
+        value: "{{risk_recaptcha_token}}"
       - name: s_locale
         value: zh_CN
       - name: spm_id

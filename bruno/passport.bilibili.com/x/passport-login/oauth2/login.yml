@@ -103,8 +103,44 @@ runtime:
         }
     - type: after-response
       code: |-
-        //test
-        //todo
+        // Parse risk verification url and store runtime vars for SMS recaptcha flow.
+        function parseQuery(url) {
+          const idx = url.indexOf('?');
+          if (idx < 0) return {};
+          const q = url.slice(idx + 1);
+          const obj = {};
+          q.split('&').forEach(pair => {
+            if (!pair) return;
+            const parts = pair.split('=');
+            const k = decodeURIComponent(parts[0] || '');
+            const v = decodeURIComponent(parts.slice(1).join('=') || '');
+            if (k) obj[k] = v;
+          });
+          return obj;
+        }
+
+        try {
+          const body = res.getBody();
+          if (!body || body.code !== 0 || !body.data) {
+            console.log('login after-response: skip, no valid data');
+          } else {
+            const riskUrl = body.data.url || '';
+            if (body.data.status === 2 && riskUrl) {
+              const q = parseQuery(riskUrl);
+              bru.setVar('risk_verify_url', riskUrl);
+              bru.setVar('risk_tmp_token', q.tmp_token || '');
+              bru.setVar('risk_request_id', q.request_id || '');
+              bru.setVar('risk_source', q.source || 'risk');
+              bru.setVar('risk_recaptcha_token', q.recaptcha_token || '');
+              bru.setVar('risk_gee_gt', q.gee_gt || '');
+              bru.setVar('risk_gee_challenge', q.gee_challenge || '');
+              bru.setVar('risk_hash', q.hash || '');
+              console.log('risk vars saved from login url');
+            }
+          }
+        } catch (e) {
+          console.log('login after-response parse failed:', e.message);
+        }
 
 settings:
   encodeUrl: true

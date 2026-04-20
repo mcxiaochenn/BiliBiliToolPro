@@ -47,7 +47,7 @@ http:
       - name: local_id
         value: "{{buvid}}"
       - name: login_session_id
-        value: fddb6c114c723b3612822a75f04eeeb3
+        value: fddb6c114c723b3612822a75f04eeeb4
       - name: mobi_app
         value: android
       - name: platform
@@ -65,6 +65,44 @@ http:
       - name: sign
         value: "{{sign}}"
   auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        // Extract geetest params from recaptcha_url for next send_recaptcha request.
+        function parseQuery(url) {
+          const idx = url.indexOf('?');
+          if (idx < 0) return {};
+          const q = url.slice(idx + 1);
+          const obj = {};
+          q.split('&').forEach(pair => {
+            if (!pair) return;
+            const parts = pair.split('=');
+            const k = decodeURIComponent(parts[0] || '');
+            const v = decodeURIComponent(parts.slice(1).join('=') || '');
+            if (k) obj[k] = v;
+          });
+          return obj;
+        }
+
+        try {
+          const body = res.getBody();
+          const url = body && body.data ? body.data.recaptcha_url || '' : '';
+          if (url) {
+            const q = parseQuery(url);
+            bru.setVar('risk_recaptcha_url', url);
+            bru.setVar('risk_recaptcha_token', q.recaptcha_token || '');
+            bru.setVar('risk_gee_gt', q.gee_gt || '');
+            bru.setVar('risk_gee_challenge', q.gee_challenge || '');
+            bru.setVar('risk_hash', q.hash || '');
+            console.log('risk vars saved from sms recaptcha_url');
+          } else {
+            console.log('sms send: no recaptcha_url in response');
+          }
+        } catch (e) {
+          console.log('sms send after-response parse failed:', e.message);
+        }
 
 settings:
   encodeUrl: false
