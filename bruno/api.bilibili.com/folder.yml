@@ -13,3 +13,7 @@ request:
         // Shared sign utility — see lib/sign.js
         const { signRequest } = require('./lib/sign');
         signRequest(req, bru);
+
+        // WBI signing — see lib/wbi.js
+        const { signWbi } = require('./lib/wbi');
+        await signWbi(req, bru);
