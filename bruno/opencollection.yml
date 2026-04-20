@@ -38,17 +38,24 @@ docs:
 
     该情况，只会将API维护到后者Host内。
 
-    ## Auth
+    ## 风控签名
 
-    Bilibili API 使用 appkey + appsec 签名机制进行身份校验。
+    Bilibili API 常见有两套签名机制：
 
-    ### 签名算法
+    - APP 侧签名：`ts + sign`
+    - Web 侧签名：`wts + w_rid`（WBI）
 
-    1. 将所有请求参数按 key 字母排序，拼接为 query string
-    2. 末尾拼接 appsec：`md5(sorted_query_string + appsec)`
-    3. 计算结果即为 `sign` 参数的值
+    ### 1) APP 签名（`ts + sign`）
 
-    ### AppKey / AppSec 配对
+    适用于大量 app 风格接口，基于 `appkey + appsec` 校验。
+
+    #### 算法
+
+    1. 将请求参数按 key 字母排序，拼接为 query string
+    2. 在末尾拼接 appsec：`md5(sorted_query_string + appsec)`
+    3. 结果即 `sign`，同时带上当前时间戳 `ts`
+
+    #### AppKey / AppSec 配对
 
     | 变量 | 值 | 用途 |
     |------|-----|------|
@@ -57,7 +64,7 @@ docs:
 
     > 注意：appkey 和 appsec 必须配对使用，不可混用，否则会返回 `{"code":-3,"message":"API校验密匙错误"}`。
 
-    ### 脚本自动签名
+    #### 脚本自动签名
 
     各 folder 的 before-request 脚本会自动：
     - 检测请求中是否包含 `sign` 参数（body 或 query params）
@@ -65,6 +72,26 @@ docs:
     - 更新 `ts` 为当前时间戳
     - 计算并设置 `sign`
     - 通过 `bru.setVar` 写入运行时变量，供 `{{ts}}` 和 `{{sign}}` 占位符自动替换
+
+    ### 2) Web 签名（`wts + w_rid`，WBI）
+
+    `WBI` 是 B 站 Web 端使用的签名机制（风控/防爬），不是通用标准协议。
+
+    核心参数：
+
+    - `wts`：当前 Unix 时间戳（秒）
+    - `w_rid`：签名值
+
+    #### WBI 签名步骤（简化）
+
+    1. 调用 `x/web-interface/nav` 获取 `wbi_img.img_url` 和 `wbi_img.sub_url`
+    2. 提取 `img_key`、`sub_key`
+    3. 按固定下标表打乱 `img_key + sub_key`，取前 32 位得到 `mixin_key`
+    4. 组装待签名参数（加入 `wts`，去掉旧 `wts/w_rid`）
+    5. 对参数值做字符过滤与 URL 编码，按 key 排序后拼接为 query
+    6. 计算 `md5(query + mixin_key)` 得到 `w_rid`
+
+    当前 collection 中，`wbi-acc-info` 请求通过 before-request 脚本自动完成上述流程。
   type: text/markdown
 bundled: false
 extensions:
